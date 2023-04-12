@@ -1,5 +1,10 @@
+html {
+  background-color: #d1919f;
+}
+
 .App {
   text-align: center;
+
 }
 
 .App-logo {
@@ -13,15 +18,54 @@
   }
 }
 
-.App-header {
+.App-header-admin {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-header-user {
+  background-color: #B1A474;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Admin-panel {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #63b7ce;
+}
+
+.User-panel {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #60828b;
+}
+
+.Card {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  max-width: "sm";
+  padding: 10px;
+  margin: 10px;
+  background-color: #f7c3ce;
 }
 
 .App-link {

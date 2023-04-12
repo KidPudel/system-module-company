@@ -1,33 +1,33 @@
-import React from 'react';
-import Contract from '../types/Contract';
-import User from '../types/User';
+import User from "../types/User";
+
+import { Card, Button } from "@mui/material";
 
 interface Props {
-    user: User;
-    onDelete: (id: string) => void;
-    onEdit: (user: User) => void;
+  user: User;
+  onDelete: (name: string) => void;
+  onEdit: (user: User) => void;
 }
 
 const UserItem = ({ user, onDelete, onEdit }: Props) => {
-    const { id, name, status } = user
+  const { id, name, status } = user;
 
-    const handleOnDelete = () => {
-        onDelete(id);
-    }
+  const handleOnDelete = () => {
+    onDelete(name);
+  };
 
-    const handleOnEdit = () => {
-        onEdit(user)
-    }
+  const handleOnEdit = () => {
+    onEdit(user);
+  };
 
-    return (
-        <li>
-            <h3>{name}</h3>
-            <p>{status}</p>
-            <button onClick={handleOnDelete}>Delete</button>
-            <button onClick={handleOnDelete}>Edit</button>
-        </li>
-    );
-
-}
+  return (
+    <Card className="Card" elevation={5} sx={{ boxShadow: "5px 5px 0px" }}>
+      <h3>{name}</h3>
+      <p>{status}</p>
+      <hr></hr>
+      <Button onClick={handleOnDelete}>Delete</Button>
+      <Button onClick={handleOnEdit}>Edit</Button>
+    </Card>
+  );
+};
 
 export default UserItem;

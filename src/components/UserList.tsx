@@ -1,21 +1,23 @@
-import Contract from '../types/Contract';
-import User from '../types/User';
-import UserItem from './UserItem';
+import User from "../types/User";
+import UserItem from "./UserItem";
 
 interface Props {
-    users: User[];
-    onEdit: (user: User) => void;
-    onDelete: (user: User) => void;
+  users: User[];
+  onEdit: (user: User) => void;
+  onDelete: (name: string) => void;
 }
 
-export default function ContractList({ users, onEdit, onDelete }: Props) {
-    return (
-        <div>
-            {users.map((user) => (
-                <UserItem
-                    key={user.id}
-                />
-            ))}
-        </div>
-    );
+export default function UserList({ users, onEdit, onDelete }: Props) {
+  return (
+    <div>
+      {users.map((user) => (
+        <UserItem
+          key={user.id}
+          user={user}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+      ))}
+    </div>
+  );
 }

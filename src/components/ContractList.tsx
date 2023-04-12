@@ -1,10 +1,10 @@
-import Contract from '../types/Contract';
-import ContractItem from './ContractItem';
+import Contract from "../types/Contract";
+import ContractItem from "./ContractItem";
 
 interface Props {
   contracts: Contract[];
   onEdit: (data: Contract) => void;
-  onDelete: (id: string) => void;
+  onDelete: (title: string) => void;
 }
 
 export default function ContractList({ contracts, onEdit, onDelete }: Props) {
