@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Contract from "./types/Contract";
 import User from "./types/User";
@@ -9,6 +9,7 @@ import EditContractForm from "./components/EditContractForm";
 import UserForm from "./components/UserForm";
 import EditUserForm from "./components/EditUserForm";
 import { Switch, Input, Card } from "@mui/material";
+import { deserialize, serialize } from "v8";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -16,6 +17,10 @@ function App() {
   function handleSwitchToggle() {
     setIsAdmin(!isAdmin);
   }
+
+
+
+
 
   return (
     <div className="App">
@@ -42,12 +47,47 @@ function UserPanel() {
   const [foundContracts, setFoundContracts] = useState<Contract[]>([]);
   const [editingContract, setEditingContract] = useState<Contract | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  function handleAddContract(contract: Contract) {
-    setContracts([...contracts, contract]);
-    setFoundContracts([...contracts, contract]);
+
+  async function handleGetContracts() {
+    try {
+      const response = await fetch('http://localhost:3001/contracts', {
+        method: 'GET'
+      });
+
+      const data = await response.json();
+
+      setContracts(data);
+      setFoundContracts(data);
+
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 
-  function handleEditContract(contract: Contract) {
+  async function handleAddContract(contract: Contract) {
+    try {
+      const response = await fetch('http://localhost:3001/contract', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contract)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add a user');
+      }
+      await handleGetContracts();
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetContracts();
+  }, [])
+
+  async function handleEditContract(contract: Contract) {
     const updatedContracts = contracts.map((c) =>
       c.id === contract.id ? contract : c
     );
@@ -56,13 +96,13 @@ function UserPanel() {
     setEditingContract(null);
   }
 
-  function handleDeleteContract(title: string) {
+  async function handleDeleteContract(title: string) {
     const updatedContracts = contracts.filter((c) => c.title !== title);
     setContracts(updatedContracts);
     setFoundContracts(updatedContracts);
   }
 
-  function handleSearchQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleSearchQueryChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchQuery(event.target.value);
     let found = contracts.filter((contract) =>
       contract.title.includes(event.target.value)
@@ -102,10 +142,48 @@ function AdminPanel() {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   let [searchQuery, setSearchQuery] = useState("");
 
-  function handleAddUser(user: User) {
-    setUsers([...users, user]);
-    setFoundUsers([...users, user]);
+
+  async function handleGetUsers() {
+    try {
+      const response = await fetch('http://localhost:3001/users', {
+        method: "GET"
+      });
+
+      if (!response.ok) {
+        throw new Error('my name is aaaa')
+      }
+      const data = await response.json();
+      console.log(data)
+      setUsers(data);
+      setFoundUsers(data);
+
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
+
+  async function handleAddUser(user: User) {
+    try {
+      const response = await fetch('http://localhost:3001/user', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add a user');
+      }
+      await handleGetUsers();
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    handleGetUsers();
+  }, [])
 
   // when eddit is clicked in the list it is updated and we now in EditUserForm
   function handleEditUser(pickedUser: User) {
