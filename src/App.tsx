@@ -46,7 +46,7 @@ function UserPanel() {
 
   async function handleGetContracts() {
     try {
-      const response = await fetch('http://localhost:3001/contracts', {
+      const response = await fetch('https://kidpudel-web-server.onrender.com/contracts', {
         method: 'GET'
       });
 
@@ -63,7 +63,7 @@ function UserPanel() {
 
   async function handleAddContract(contract: Contract) {
     try {
-      const response = await fetch('http://localhost:3001/contract', {
+      const response = await fetch('https://kidpudel-web-server.onrender.com/contract', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contract)
@@ -141,7 +141,7 @@ function AdminPanel() {
 
   async function handleGetUsers() {
     try {
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch('https://kidpudel-web-server.onrender.com/users', {
         method: "GET"
       });
 
@@ -161,7 +161,7 @@ function AdminPanel() {
 
   async function handleAddUser(user: User) {
     try {
-      const response = await fetch('http://localhost:3001/user', {
+      const response = await fetch('https://kidpudel-web-server.onrender.com/user', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
