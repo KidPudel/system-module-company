@@ -18,10 +18,6 @@ function App() {
     setIsAdmin(!isAdmin);
   }
 
-
-
-
-
   return (
     <div className="App">
       <header className={isAdmin ? "App-header-admin" : "App-header-user"}>
@@ -74,7 +70,7 @@ function UserPanel() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add a user');
+        throw new Error('Failed to add a contract');
       }
       await handleGetContracts();
     }
